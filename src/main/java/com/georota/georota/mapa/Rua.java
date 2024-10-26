@@ -1,4 +1,4 @@
-package com.georota.georota.cidade_mapa;
+package com.georota.georota.mapa;
 
 public class Rua {
     Ponto destino;

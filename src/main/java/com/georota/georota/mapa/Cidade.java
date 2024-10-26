@@ -1,4 +1,4 @@
-package com.georota.georota.cidade_mapa;
+package com.georota.georota.mapa;
 
 import java.util.ArrayList;
 import java.util.List;

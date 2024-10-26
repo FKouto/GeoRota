@@ -1,6 +1,6 @@
 package com.georota.georota;
 
-import com.georota.georota.cidade_mapa.Cidade;
+import com.georota.georota.mapa.Cidade;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
