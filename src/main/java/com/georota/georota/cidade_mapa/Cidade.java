@@ -32,8 +32,13 @@ public class Cidade {
     public void exibirCidade() {
         for (Ponto ponto : pontos) {
             System.out.println("Ponto: " + ponto.nome);
-            for (Rua rua : ponto.conexoes) {
-                System.out.println("  Conectado a: " + rua.destino.nome + " (Distância: " + rua.distancia + ")");
+            if (ponto.conexoes.isEmpty()) {
+                System.out.println(" Sem pontos de conexão");
+            }
+            if (ponto.conexoes != null) {
+                for (Rua rua : ponto.conexoes) {
+                    System.out.println("  Conectado a: " + rua.destino.nome + " (Distância: " + rua.distancia + ")");
+                }
             }
         }
     }
