@@ -11,7 +11,7 @@ public class GeorotaApplication {
 		Cidade osasco = new Cidade();
 		osasco.addPonto("City Bussocaba - Parque Municipal");
 		osasco.addPonto("City Bussocaba - Escola Municipal");
-		osasco.adicionarConexao("City Bussocaba - Parque Municipal", "City Bussocaba - Escola Municipal", 2.5);
+		osasco.addConexao("City Bussocaba - Parque Municipal", "City Bussocaba - Escola Municipal", 2.5);
 		osasco.exibirCidade();
     }
 

@@ -13,7 +13,7 @@ public class Cidade {
         Ponto novoPonto = new Ponto(nome);
         pontos.add(novoPonto);
     }
-    public void adicionarConexao(String nomeOrigem, String nomeDestino, double distancia) {
+    public void addConexao(String nomeOrigem, String nomeDestino, double distancia) {
         Ponto origem = encontrarPonto(nomeOrigem);
         Ponto destino = encontrarPonto(nomeDestino);
 
