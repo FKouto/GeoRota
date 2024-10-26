@@ -9,10 +9,12 @@ public class Cidade {
     public Cidade() {
         this.pontos = new ArrayList<>();
     }
+
     public void addPonto(String nome) {
         Ponto novoPonto = new Ponto(nome);
         pontos.add(novoPonto);
     }
+
     public void addConexao(String nomeOrigem, String nomeDestino, double distancia) {
         Ponto origem = encontrarPonto(nomeOrigem);
         Ponto destino = encontrarPonto(nomeDestino);
@@ -21,6 +23,7 @@ public class Cidade {
             origem.adicionarConexao(destino, distancia);
         }
     }
+
     private Ponto encontrarPonto(String nome) {
         for (Ponto ponto : pontos) {
             if (ponto.nome.equals(nome)) {
@@ -29,6 +32,7 @@ public class Cidade {
         }
         return null;
     }
+
     public void exibirCidade() {
         for (Ponto ponto : pontos) {
             System.out.println("Ponto: " + ponto.nome);
