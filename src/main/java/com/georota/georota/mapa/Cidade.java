@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Cidade {
     List<Ponto> pontos;
+    private String distanciaPonto;
 
     public Cidade() {
         this.pontos = new ArrayList<>();
@@ -15,12 +16,18 @@ public class Cidade {
         pontos.add(novoPonto);
     }
 
-    public void addConexao(String nomeOrigem, String nomeDestino, double distancia) {
+    public void addConexao(String nomeOrigem, String nomeDestino) {
         Ponto origem = encontrarPonto(nomeOrigem);
         Ponto destino = encontrarPonto(nomeDestino);
 
         if (origem != null && destino != null) {
-            origem.adicionarConexao(destino, distancia);
+            try {
+                distanciaPonto = GoogleMaps.getDistance(nomeOrigem.replace(" ", "+"),nomeDestino.replace(" ",
+                        "+"));
+                origem.adicionarConexao(destino, 0.0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -41,7 +48,7 @@ public class Cidade {
             }
             if (ponto.conexoes != null) {
                 for (Rua rua : ponto.conexoes) {
-                    System.out.println("  Conectado a: " + rua.destino.nome + " (Distância: " + rua.distancia + ")");
+                    System.out.println("  Conectado a: " + rua.destino.nome + " (Distância: " + distanciaPonto + ")");
                 }
             }
         }
