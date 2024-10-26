@@ -9,7 +9,7 @@ public class Cidade {
     public Cidade() {
         this.pontos = new ArrayList<>();
     }
-    public void adicionarPonto(String nome) {
+    public void addPonto(String nome) {
         Ponto novoPonto = new Ponto(nome);
         pontos.add(novoPonto);
     }
