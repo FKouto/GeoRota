@@ -1,14 +1,28 @@
 package com.georota.georota.mapa;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
+
+
 
 public class Cidade {
     List<Ponto> pontos;
     private String distanciaPonto;
+     // Pilha para armazenar locais temporários
+     public Stack<Ponto> pilhaLocais;
+
+    // Fila para processar rotas em ordem
+    public Queue<Ponto> filaRotas;
+    
 
     public Cidade() {
         this.pontos = new ArrayList<>();
+        this.pilhaLocais = new Stack<>();
+        this.filaRotas =   new LinkedList<>();
+        
     }
 
     public void addPonto(String nome) {
@@ -52,5 +66,48 @@ public class Cidade {
                 }
             }
         }
+    }
+    /**
+     * Adiciona um ponto à pilha de locais temporários.
+     * 
+     * @param ponto O ponto a ser adicionado à pilha.
+     */
+    public void adicionarPontoPilha(Ponto ponto){
+        pilhaLocais.push(ponto);
+    }
+
+     /**
+     * Remove e retorna o último ponto adicionado à pilha de locais temporários.
+     * 
+     * @return O ponto removido da pilha, ou null se a pilha estiver vazia.
+     */
+public Ponto removerPontoPilha(){
+    return pilhaLocais.isEmpty() ? null : pilhaLocais.pop();
+
+}
+ /**
+     * Adiciona um ponto à fila de rotas.
+     * 
+     * @param ponto O ponto a ser adicionado à fila.
+     */
+    public void adicionarPontoFila(Ponto ponto) {
+        filaRotas.offer(ponto);
+    }
+      /**
+     * Remove e retorna o primeiro ponto da fila de rotas.
+     * 
+     * @return O ponto removido da fila, ou null se a fila estiver vazia.
+     */
+    public Ponto removerPontoFila() {
+        return filaRotas.poll();
+    }
+
+    public Ponto buscaLinear(String nome) {
+        for (Ponto ponto : pontos) {
+            if (ponto.nome.equals(nome)) {
+                return ponto;
+            }
+        }
+        return null;
     }
 }

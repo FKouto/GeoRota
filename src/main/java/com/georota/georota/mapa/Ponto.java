@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Ponto {
-    String nome;
+    public String nome;
     List<Rua> conexoes;
 
     public Ponto(String nome) {

@@ -18,7 +18,7 @@ import com.google.gson.Gson; // Classe principal da biblioteca Gson, utilizada p
 import org.jetbrains.annotations.NotNull; // Anotação que indica que um parâmetro ou retorno de método não pode ser nulo.
 
 public class GoogleMaps {
-    private static final String MAPS_KEY = System.getenv("GOOGLE_MAPS_KEY");
+    private static final String MAPS_KEY = "AIzaSyBMlQMB77ET24CbG5JtV-JBIUBs_jJ4_GU";
 
     /**
      * Obter a distância entre dois pontos.
