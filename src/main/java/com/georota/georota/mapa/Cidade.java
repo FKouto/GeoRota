@@ -9,7 +9,19 @@ import java.util.Stack;
 
 
 public class Cidade {
-    List<Ponto> pontos;
+    ArvoreBinaria arvoreBusca = new ArvoreBinaria();
+
+    //Método para adicionar um ponto à árvore binária
+    public void adicionarPontoArvore(Ponto ponto){
+        arvoreBusca.adicionar(ponto);
+    }
+
+    //Método para buscar um ponto na árvore binária
+    public Ponto buscarPontoArvore(String nome){
+        return arvoreBusca.buscar(nome);
+    }
+    
+    public List<Ponto> pontos;
     private String distanciaPonto;
      // Pilha para armazenar locais temporários
      public Stack<Ponto> pilhaLocais;
