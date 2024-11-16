@@ -17,7 +17,7 @@ import com.google.gson.Gson; // Classe principal da biblioteca Gson, utilizada p
 // Imports IDE (JetBrains/IntelliJ)
 import org.jetbrains.annotations.NotNull; // Anotação que indica que um parâmetro ou retorno de método não pode ser nulo.
 
-public class GoogleMaps {
+public class DistanceMatrix {
     private static final String MAPS_KEY = "chave apis";
 
     /**
