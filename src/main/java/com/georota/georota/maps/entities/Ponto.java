@@ -1,4 +1,4 @@
-package com.georota.georota.mapa;
+package com.georota.georota.maps.entities;
 
 /*
     Representa um ponto específico dentro da Rua, Ponto de Referência ou Local da Cidade.

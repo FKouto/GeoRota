@@ -1,4 +1,4 @@
-package com.georota.georota.mapa;
+package com.georota.georota.api;
 
 // Imports Java
 import com.google.gson.Gson;

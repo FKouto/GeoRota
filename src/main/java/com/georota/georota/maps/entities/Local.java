@@ -1,4 +1,4 @@
-package com.georota.georota.mapa;
+package com.georota.georota.maps.entities;
 // Importação das anotações do Lombok para geração automática de getters e setters
 import lombok.Getter;
 import lombok.Setter;
@@ -28,4 +28,3 @@ public class Local extends Ponto {
         this.conexao.add(ponto);
     }
 }
-

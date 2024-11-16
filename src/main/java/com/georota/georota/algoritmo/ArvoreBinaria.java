@@ -1,4 +1,6 @@
-package com.georota.georota.mapa;
+package com.georota.georota.algoritmo;
+
+import com.georota.georota.maps.entities.Local;
 
 public class ArvoreBinaria {
     private Node raiz;

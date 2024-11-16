@@ -1,4 +1,4 @@
-package com.georota.georota.mapa;
+package com.georota.georota.maps.entities;
 
 /*
   Representa um logradouro da Cidade

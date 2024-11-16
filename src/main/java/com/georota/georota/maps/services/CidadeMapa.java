@@ -1,4 +1,9 @@
-package com.georota.georota.mapa;
+package com.georota.georota.maps.services;
+
+import com.georota.georota.algoritmo.ArvoreBinaria;
+import com.georota.georota.api.DistanceMatrix;
+import com.georota.georota.maps.entities.Local;
+import com.georota.georota.maps.entities.Ponto;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
