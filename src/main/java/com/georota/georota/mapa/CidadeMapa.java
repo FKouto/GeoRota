@@ -39,7 +39,7 @@ public class CidadeMapa {
             destino.criarConexaoLocal(origem);
             conexoes.get(nomePontoOrigem).add(destino);
             conexoes.get(nomePontoDestino).add(origem);
-            String distancia = DistanceMatrix.getDistance(origem.getLogradouro(), destino.getLogradouro());
+            String distancia = DistanceMatrix.obterDistancia(origem.getLogradouro(), destino.getLogradouro());
         }
     }
 
@@ -57,7 +57,7 @@ public class CidadeMapa {
             System.out.println("Ponto: " + local.getNomePonto());
             System.out.println(" Conexões:");
             for (Ponto conexao : local.getConexao()) {
-                String distancia = DistanceMatrix.getDistance(local.getLogradouro(), conexao.getLogradouro());
+                String distancia = DistanceMatrix.obterDistancia(local.getLogradouro(), conexao.getLogradouro());
                 System.out.println(" - " + conexao.getNomePonto() + " Distância: " + distancia);
             }
             System.out.println();
