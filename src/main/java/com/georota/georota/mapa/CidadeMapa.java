@@ -6,118 +6,86 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
-
+import java.util.*;
 
 public class CidadeMapa {
-    ArvoreBinaria arvoreBusca = new ArvoreBinaria();
-
-    //Método para adicionar um ponto à árvore binária
-    public void adicionarPontoArvore(Ponto ponto){
-        arvoreBusca.adicionar(ponto);
-    }
-
-    //Método para buscar um ponto na árvore binária
-    public Ponto buscarPontoArvore(String nome){
-        return arvoreBusca.buscar(nome);
-    }
-    
-    public List<Ponto> pontos;
-    private String distanciaPonto;
-     // Pilha para armazenar locais temporários
-     public Stack<Ponto> pilhaLocais;
-
-    // Fila para processar rotas em ordem
-    public Queue<Ponto> filaRotas;
-    
+    public final List<Local> locais;
+    private final Map<String, List<Local>> conexoes;
+    // Armazenar locais temporários (Pilha) - (LIFO)
+    public Stack<Local> tempLocais;
+    // Fila para processar as rotas em ordem (FIFO)
+    public Queue<Local> filaLocais;
+    // Arvore Binária
+    ArvoreBinaria arvoreBuscar = new ArvoreBinaria();
 
     public CidadeMapa() {
-        this.pontos = new ArrayList<>();
-        this.pilhaLocais = new Stack<>();
-        this.filaRotas =   new LinkedList<>();
-        
+        this.locais = new ArrayList<>();
+        this.conexoes = new HashMap<>();
+        this.tempLocais = new Stack<>();  // Inicializando a pilha
+        this.filaLocais = new LinkedList<>();  // Também inicialize a fila
     }
 
-    public void addPonto(String nome) {
-        Ponto novoPonto = new Ponto(nome);
-        pontos.add(novoPonto);
+    public void adicionaLocal(String nomePonto, String logradouro) {
+        Local local = new Local(nomePonto, logradouro);
+        locais.add(local);
+        conexoes.put(nomePonto, new ArrayList<>());
     }
 
-    public void addConexao(String nomeOrigem, String nomeDestino) {
-        Ponto origem = encontrarPonto(nomeOrigem);
-        Ponto destino = encontrarPonto(nomeDestino);
-
+    public void conectarPontos(String nomePontoOrigem, String nomePontoDestino) {
+        Local origem = encontrarLocal(nomePontoOrigem);
+        Local destino = encontrarLocal(nomePontoDestino);
         if (origem != null && destino != null) {
-            try {
-                distanciaPonto = GoogleMaps.getDistance(nomeOrigem.replace(" ", "+"),nomeDestino.replace(" ",
-                        "+"));
-                origem.adicionarConexao(destino, 0.0);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            origem.criarConexaoLocal(destino);
+            destino.criarConexaoLocal(origem);
+            conexoes.get(nomePontoOrigem).add(destino);
+            conexoes.get(nomePontoDestino).add(origem);
+            String distancia = GoogleMaps.getDistance(origem.getLogradouro(), destino.getLogradouro());
         }
     }
 
-    private Ponto encontrarPonto(String nome) {
-        for (Ponto ponto : pontos) {
-            if (ponto.nome.equals(nome)) {
-                return ponto;
+    public Local encontrarLocal(String nomePonto) {
+        for (Local local : locais) {
+            if (local.getNomePonto().equals(nomePonto)) {
+                return local;
             }
         }
         return null;
     }
 
-    public void exibirCidade() {
-        for (Ponto ponto : pontos) {
-            System.out.println("Ponto: " + ponto.nome);
-            if (ponto.conexoes.isEmpty()) {
-                System.out.println(" Sem pontos de conexão");
+    public void printLocais() {
+        for (Local local : locais) {
+            System.out.println("Ponto: " + local.getNomePonto());
+            System.out.println(" Conexões:");
+            for (Ponto conexao : local.getConexao()) {
+                String distancia = GoogleMaps.getDistance(local.getLogradouro(), conexao.getLogradouro());
+                System.out.println(" - " + conexao.getNomePonto() + " Distância: " + distancia);
             }
-            if (ponto.conexoes != null) {
-                for (Rua rua : ponto.conexoes) {
-                    System.out.println("  Conectado a: " + rua.destino.nome + " (Distância: " + distanciaPonto + ")");
-                }
-            }
+            System.out.println();
         }
     }
-    /**
-     * Adiciona um ponto à pilha de locais temporários.
-     * 
-     * @param ponto O ponto a ser adicionado à pilha.
-     */
-    public void adicionarPontoPilha(Ponto ponto){
-        pilhaLocais.push(ponto);
+
+
+    // Novos
+    public void adicionarLocalTemporario(Local local) {
+        tempLocais.push(local);
     }
 
-     /**
-     * Remove e retorna o último ponto adicionado à pilha de locais temporários.
-     * 
-     * @return O ponto removido da pilha, ou null se a pilha estiver vazia.
-     */
-public Ponto removerPontoPilha(){
-    return pilhaLocais.isEmpty() ? null : pilhaLocais.pop();
-
-}
- /**
-     * Adiciona um ponto à fila de rotas.
-     * 
-     * @param ponto O ponto a ser adicionado à fila.
-     */
-    public void adicionarPontoFila(Ponto ponto) {
-        filaRotas.offer(ponto);
-    }
-      /**
-     * Remove e retorna o primeiro ponto da fila de rotas.
-     * 
-     * @return O ponto removido da fila, ou null se a fila estiver vazia.
-     */
-    public Ponto removerPontoFila() {
-        return filaRotas.poll();
+    public Local removerLocalTemporario() {
+        return tempLocais.isEmpty() ? null : tempLocais.pop();
     }
 
-    public Ponto buscaLinear(String nome) {
-        for (Ponto ponto : pontos) {
-            if (ponto.nome.equals(nome)) {
-                return ponto;
+    public void adicionarLocalFila(Local local) {
+        filaLocais.offer(local);
+    }
+
+    public Local removerLocalFila() {
+        return filaLocais.poll();
+    }
+
+    public Local buscaLinear(String nomePonto) {
+        for (Local local : locais) {
+            if (local.getNomePonto().equals(nomePonto)) {
+                return local;
             }
         }
         return null;
