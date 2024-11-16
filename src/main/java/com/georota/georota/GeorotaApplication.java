@@ -1,6 +1,6 @@
 package com.georota.georota;
 
-import com.georota.georota.mapa.Cidade;
+import com.georota.georota.mapa.CidadeMapa;
 import com.georota.georota.mapa.Ponto;
 
 
@@ -12,7 +12,7 @@ public class GeorotaApplication {
 
     public static void main(String[] args) {
 //		SpringApplication.run(GeorotaApplication.class, args);
-		Cidade osasco = new Cidade();
+		CidadeMapa osasco = new CidadeMapa();
 		osasco.addPonto("jandira");
 		osasco.addPonto("barueri");
 		osasco.addConexao("jandira", "barueri");

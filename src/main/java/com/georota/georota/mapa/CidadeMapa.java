@@ -8,7 +8,7 @@ import java.util.Stack;
 
 
 
-public class Cidade {
+public class CidadeMapa {
     ArvoreBinaria arvoreBusca = new ArvoreBinaria();
 
     //Método para adicionar um ponto à árvore binária
@@ -30,7 +30,7 @@ public class Cidade {
     public Queue<Ponto> filaRotas;
     
 
-    public Cidade() {
+    public CidadeMapa() {
         this.pontos = new ArrayList<>();
         this.pilhaLocais = new Stack<>();
         this.filaRotas =   new LinkedList<>();
