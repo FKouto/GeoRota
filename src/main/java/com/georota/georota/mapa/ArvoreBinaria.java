@@ -1,50 +1,48 @@
 package com.georota.georota.mapa;
 
 public class ArvoreBinaria {
-    private No raiz;
-    
-    private class No {
-        Ponto ponto;
-        No esq, dir;
+    private Node raiz;
 
-        public No(Ponto ponto){
-            this.ponto = ponto;
-            esq = dir = null;
-        }
-    };
-
-    public void adicionar(Ponto ponto) {
-        raiz = adicionarRecursivo(raiz, ponto);
+    public void adicionar(Local local) {
+        raiz = adicionarRecursivo(raiz, local);
     }
 
-    private No adicionarRecursivo(No raiz, Ponto ponto){
-        if(raiz == null){
-            raiz = new No(ponto);
+    private Node adicionarRecursivo(Node raiz, Local local) {
+        if (raiz == null) {
+            raiz = new Node(local);
             return raiz;
         }
-
-        if(ponto.nome.compareTo(raiz.ponto.nome) < 0){
-            raiz.esq = adicionarRecursivo(raiz.esq, ponto);
-        } else if (ponto.nome.compareTo(raiz.ponto.nome) > 0){
-            raiz.dir = adicionarRecursivo(raiz.dir, ponto);
+        if (local.getNomePonto().compareTo(raiz.local.getNomePonto()) < 0) {
+            raiz.esquerda = adicionarRecursivo(raiz.esquerda, local);
+        }
+        if (local.getNomePonto().compareTo(raiz.local.getNomePonto()) > 0) {
+            raiz.direita = adicionarRecursivo(raiz.direita, local);
         }
         return raiz;
-    }  
-
-        public Ponto buscar(String nome){
-            return buscarRecursivo(raiz, nome);
-        }
-
-    //Método recursivo para buscar um ponto na árvore
-    private Ponto buscarRecursivo(No raiz, String nome) {
-        if(raiz == null || raiz.ponto.nome.equals(nome)){
-            return raiz != null ? raiz.ponto : null;
-        }
-
-        if(nome.compareTo(raiz.ponto.nome) < 0){
-            return buscarRecursivo(raiz.esq, nome);
-        }
-
-        return buscarRecursivo(raiz.dir, nome);
     }
+
+    public Local buscar(String nomePonto) {
+        return buscarRecursivo(raiz, nomePonto);
+    }
+
+    private Local buscarRecursivo(Node raiz, String nomePonto) {
+        if (raiz == null || raiz.local.getNomePonto().equals(nomePonto)) {
+            return raiz != null ? raiz.local : null;
+        }
+        if (nomePonto.compareTo(raiz.local.getNomePonto()) < 0) {
+            return buscarRecursivo(raiz.esquerda, nomePonto);
+        }
+        return buscarRecursivo(raiz.direita, nomePonto);
+    }
+
+    private class Node {
+        Local local;
+        Node esquerda, direita;
+
+        public Node(Local local) {
+            this.local = local;
+            esquerda = direita = null;
+        }
+    }
+
 }
