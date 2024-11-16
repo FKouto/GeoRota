@@ -90,4 +90,13 @@ public class CidadeMapa {
         }
         return null;
     }
+
+    // Arvore Binária
+    public void adicionarLocalArvore(Local local) {
+        arvoreBuscar.adicionar(local);
+    }
+
+    public Local buscarLocalArvore(String nomePonto) {
+        return arvoreBuscar.buscar(nomePonto);
+    }
 }
