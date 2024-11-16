@@ -1,18 +1,24 @@
 package com.georota.georota.mapa;
 
-import java.util.ArrayList;
-import java.util.List;
+/*
+    Representa um ponto específico dentro da Rua, Ponto de Referência ou Local da Cidade.
+*/
 
-public class Ponto {
-    public String nome;
-    List<Rua> conexoes;
+// Importação das anotações do Lombok para geração automática de getters e setters
 
-    public Ponto(String nome) {
-        this.nome = nome;
-        this.conexoes = new ArrayList<>();
-    }
+import lombok.Getter;
+import lombok.Setter;
 
-    public void adicionarConexao(Ponto destino, double distancia) {
-        this.conexoes.add(new Rua(destino, distancia));
+@Getter
+@Setter
+public abstract class Ponto extends Rua {
+    private String nomePonto;
+
+    /**
+     * @param nomePonto representa o nome do ponto de Referência da Rua informada.
+     */
+    public Ponto(String logradouro, String nomePonto) {
+        super(logradouro);
+        this.nomePonto = nomePonto;
     }
 }
