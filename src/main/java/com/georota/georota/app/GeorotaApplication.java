@@ -3,6 +3,8 @@ package com.georota.georota.app;
 import com.georota.georota.maps.services.CidadeMapa;
 import com.georota.georota.maps.entities.Local;
 
+import javax.swing.JOptionPane;
+
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
@@ -11,8 +13,16 @@ public class GeorotaApplication {
     public static void main(String[] args) {
         CidadeMapa cidade = new CidadeMapa();
 
+        String novoLocal = JOptionPane.showInputDialog("Digite um novo local de interesse");
+        String novoLogradouro = JOptionPane.showInputDialog("Digite o novo logradouro");
+
+        Local l =  new Local(novoLocal, novoLogradouro);
+
         // Adiciona alguns locais
-        cidade.adicionaLocal("Praça da Sé", "Se, São Paulo - SP, 01001-000");
+        cidade.adicionaLocal(novoLocal, novoLogradouro);  //"Praça da Sé", "Se, São Paulo - SP, 01001-000"
+
+        JOptionPane.showMessageDialog(null, l.getNomePonto() + " , " + l.getLogradouro());
+
         cidade.adicionaLocal("MorumBIS", "Praça Roberto Gomes Pedrosa, 1 - Morumbi, São Paulo - SP, 05653-070");
         cidade.adicionaLocal("Parque Ibirapuera", "Av. Pedro Álvares Cabral - Vila Mariana, São Paulo - SP, 04094-050");
 
