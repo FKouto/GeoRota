@@ -2,6 +2,7 @@ package com.georota.georota.maps.services;
 
 import com.georota.georota.algoritmo.ArvoreBinaria;
 import com.georota.georota.api.DistanceMatrix;
+import com.georota.georota.api.Directions;
 import com.georota.georota.maps.entities.Local;
 import com.georota.georota.maps.entities.Ponto;
 
@@ -57,17 +58,20 @@ public class CidadeMapa {
         return null;
     }
 
-    public void printLocais() {
+    public void printLocais(String modo) {
         for (Local local : locais) {
             System.out.println("Ponto: " + local.getNomePonto());
             System.out.println(" Conexões:");
             for (Ponto conexao : local.getConexao()) {
                 String distancia = DistanceMatrix.obterDistancia(local.getLogradouro(), conexao.getLogradouro());
                 System.out.println(" - " + conexao.getNomePonto() + " Distância: " + distancia);
+                String rota = Directions.melhorRota(local.getLogradouro(), conexao.getLogradouro(), modo);
+                System.out.println("  - Melhor Rota: " + rota);
             }
             System.out.println();
         }
     }
+
 
 
     // Novos

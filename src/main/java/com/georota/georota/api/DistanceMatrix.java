@@ -1,6 +1,7 @@
 package com.georota.georota.api;
 
 // Imports Java
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.jetbrains.annotations.NotNull;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.*;
+import java.nio.charset.StandardCharsets;
 
 public class DistanceMatrix {
     private static final String MAPS_KEY = System.getenv("GOOGLE_MAPS_KEY");
@@ -17,15 +19,15 @@ public class DistanceMatrix {
     /**
      * Obtém a distância entre dois locais.
      *
-     * @param origem Local de origem para calcular a distância
+     * @param origem  Local de origem para calcular a distância
      * @param destino Local de destino para retornar distância
      * @return distância entre o local, origem e destino
      */
     public static String obterDistancia(String origem, String destino) {
         try {
             // Codificando os locais para a URL
-            String origemCodificada = URLEncoder.encode(origem, "UTF-8");
-            String destinoCodificado = URLEncoder.encode(destino, "UTF-8");
+            String origemCodificada = URLEncoder.encode(origem, StandardCharsets.UTF_8);
+            String destinoCodificado = URLEncoder.encode(destino, StandardCharsets.UTF_8);
 
             BufferedReader read = getBufferedReader(origemCodificada, destinoCodificado);
             JsonObject json = new Gson().fromJson(read, JsonObject.class);
@@ -47,7 +49,6 @@ public class DistanceMatrix {
             }
             return "Distância não encontrada ou erro na requisição.";
         } catch (Exception e) {
-            e.printStackTrace(); // Imprime o stack trace para ajudar na depuração
             return "Erro ao obter a distância: " + e.getMessage();
         }
     }
