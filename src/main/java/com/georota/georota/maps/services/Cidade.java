@@ -1,5 +1,6 @@
 package com.georota.georota.maps.services;
 
+import com.georota.georota.arvoreBinaria.ArvoreBinaria;
 import com.georota.georota.google.Directions;
 import com.georota.georota.google.DistanceMatrix;
 import com.georota.georota.maps.entities.Local;
@@ -22,6 +23,9 @@ public class Cidade {
         locais.add(local);
         elo.put(nomePonto, new ArrayList<>());
     }
+
+    // Arvore Binária
+    ArvoreBinaria arvoreBuscar = new ArvoreBinaria();
 
     public void conectarElos(String nomeOrigem, String nomeDestino) {
         Local origem = encontrarPontoPorNome(nomeOrigem);
@@ -79,4 +83,23 @@ public class Cidade {
         }
         return "Erro: Um ou ambos os pontos não existem.";
     }
+     // Arvore Binária
+     public void adicionarLocalArvore(Local local) {
+        System.out.println("Adicionando local à árvore: " + local.getNomePonto());
+        arvoreBuscar.adicionar(local);
+        arvoreBuscar.listarLocaisArvore(); // verifica a arvore
+    }
+
+    public Local buscarLocalArvore(String nomePonto) {
+        nomePonto = nomePonto.trim().toLowerCase();
+        for (Local local : locais) {
+            System.out.println("Verificando local na árvore: " + local.getNomePonto());
+            if (local.getNomePonto().trim().toLowerCase().equals(nomePonto)) {
+                return local;
+            }
+        }
+        return null;
+    }
+    
+    
 }

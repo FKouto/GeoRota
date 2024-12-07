@@ -1,5 +1,6 @@
 package com.georota.georota.controller;
 
+import com.georota.georota.maps.entities.Local;
 import com.georota.georota.maps.services.Cidade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,8 @@ public class MapaController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Map<String, String>> adicionarLocal(@RequestParam String nomePonto, @RequestParam String logradouro) {
+    public ResponseEntity<Map<String, String>> adicionarLocal(@RequestParam String nomePonto,
+            @RequestParam String logradouro) {
         cidade.adicionarLocal(nomePonto, logradouro);
         Map<String, String> response = new HashMap<>();
         response.put("message", "Local adicionado com sucesso.");
@@ -32,7 +34,8 @@ public class MapaController {
     }
 
     @PostMapping("/connect")
-    public ResponseEntity<Map<String, String>> conectarElos(@RequestParam String nomeOrigem, @RequestParam String nomeDestino) {
+    public ResponseEntity<Map<String, String>> conectarElos(@RequestParam String nomeOrigem,
+            @RequestParam String nomeDestino) {
         Map<String, String> response = new HashMap<>();
         if (!cidade.existePonto(nomeOrigem) && !cidade.existePonto(nomeDestino)) {
             response.put("error", "Erro: Os pontos de origem e destino não existem.");
@@ -59,7 +62,8 @@ public class MapaController {
     }
 
     @GetMapping("/melhorota")
-    public ResponseEntity<String> obterMelhorRota(@RequestParam String nomeOrigem, @RequestParam String nomeDestino, @RequestParam String modo) {
+    public ResponseEntity<String> obterMelhorRota(@RequestParam String nomeOrigem, @RequestParam String nomeDestino,
+            @RequestParam String modo) {
         String rota = cidade.obterMelhorRotaEntrePontos(nomeOrigem, nomeDestino, modo);
         if (rota.startsWith("Erro")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -70,4 +74,30 @@ public class MapaController {
                 .header("Content-Type", "application/json")
                 .body(rota);
     }
+
+    @GetMapping("/arvore/buscar")
+    public ResponseEntity<Map<String, String>> buscarConexaoNaArvore(@RequestParam String nomeOrigem, @RequestParam String nomeDestino) {
+    Local origem = cidade.buscarLocalArvore(nomeOrigem);
+    Local destino = cidade.buscarLocalArvore(nomeDestino);
+    Map<String, String> response = new HashMap<>();
+
+    if (origem == null) {
+        response.put("error", "Ponto de origem não encontrado na árvore: " + nomeOrigem);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    if (destino == null) {
+        response.put("error", "Ponto de destino não encontrado na árvore: " + nomeDestino);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    response.put("message", "Ambos os pontos foram encontrados na árvore.");
+    response.put("nomeOrigem", origem.getNomePonto());
+    response.put("logradouroOrigem", origem.getLogradouro());
+    response.put("nomeDestino", destino.getNomePonto());
+    response.put("logradouroDestino", destino.getLogradouro());
+
+    return ResponseEntity.ok(response);
+}
+
 }
