@@ -32,6 +32,16 @@ public class MapaController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/adicionar-temporario")
+    public ResponseEntity<Map<String, String>> adicionarLocalTemporario(@RequestParam String nomePonto, @RequestParam String logradouro) {
+        cidade.adicionarLocalTemporario(nomePonto, logradouro);
+        Map<String, String> response = new HashMap<>();
+        response.put("mensagem", "Local temporário adicionado e processado com sucesso.");
+        response.put("Local", nomePonto);
+        response.put("Rua", logradouro);
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/buscar-local")
     public ResponseEntity<Map<String, String>> buscarLocalArvore(@RequestParam String nomePonto) {
         Local local = cidade.buscarLocalArvore(nomePonto);

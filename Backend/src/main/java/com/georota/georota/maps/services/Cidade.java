@@ -7,15 +7,13 @@ import com.georota.georota.maps.entities.Ponto;
 import com.google.gson.Gson;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class Cidade {
     private final List<Local> locais = new ArrayList<>();
     private final Map<String, List<Local>> elo = new HashMap<>();
+    private final Queue<Local> locaisTemporarios = new LinkedList<>();
     private final ArvoreBinaria arvoreBuscar = new ArvoreBinaria();
 
     public void adicionarLocal(String nomePonto, String logradouro) {
@@ -26,6 +24,24 @@ public class Cidade {
         locais.add(local);
         elo.put(nomePonto, new ArrayList<>());
         addLocalArvore(local);
+    }
+
+    public void adicionarLocalTemporario(String nomePonto, String logradouro) {
+        if (existePonto(nomePonto)) {
+            throw new IllegalArgumentException("O ponto já existe.");
+        }
+        Local local = new Local(nomePonto, logradouro);
+        locaisTemporarios.add(local);
+        processarLocaisTemporarios();
+    }
+
+    public void processarLocaisTemporarios() {
+        while (!locaisTemporarios.isEmpty()) {
+            Local local = locaisTemporarios.poll();
+            locais.add(local);
+            elo.put(local.getNomePonto(), new ArrayList<>());
+            addLocalArvore(local);
+        }
     }
 
     public void conectarElos(String nomeOrigem, String nomeDestino) {

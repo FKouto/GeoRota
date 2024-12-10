@@ -13,6 +13,21 @@ document.getElementById('addLocationForm').addEventListener('submit', async (e) 
   document.getElementById('addLocationResult').innerText = JSON.stringify(result);
 });
 
+// Adicionar Local Temporário
+document.getElementById('addTempLocationForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const nomePonto = document.getElementById('tempNomePonto').value;
+  const logradouro = document.getElementById('tempLogradouro').value;
+
+  const response = await fetch(`${apiUrl}/adicionar-temporario?nomePonto=${encodeURIComponent(nomePonto)}&logradouro=${encodeURIComponent(logradouro)}`, {
+    method: 'POST'
+  });
+  const result = await response.json();
+  document.getElementById('addTempLocationResult').innerHTML = `
+    <p>Local temporário adicionado com sucesso.</p>
+  `;
+});
+
 // Buscar Local
 document.getElementById('searchLocationForm').addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -23,7 +38,11 @@ document.getElementById('searchLocationForm').addEventListener('submit', async (
   });
   if (response.status === 200) {
     const result = await response.json();
-    document.getElementById('searchLocationResult').innerText = JSON.stringify(result);
+      document.getElementById('searchLocationResult').innerHTML = `
+      <div class="location-details">
+        <p><strong>Logradouro:</strong> ${result.logradouro}</p>
+      </div>
+    `;
   } else {
     document.getElementById('searchLocationResult').innerText = 'Local não encontrado';
   }
